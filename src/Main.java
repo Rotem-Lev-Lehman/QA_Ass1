@@ -34,7 +34,7 @@ public class Main {
                     }
                 }
                 else if(args[0].equals("AllIncludesString")){
-
+                    namesMaster.AllIncludesString(args[1]);
                 }
                 else {
                     badInput();

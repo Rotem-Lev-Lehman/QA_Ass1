@@ -53,7 +53,7 @@ public class NamesMaster {
     }
 
     public void CountMaxString(int length){
-        Map<String,Integer> dictionary = getDictByLength(length,false);
+        Map<String,Integer> dictionary = getDictByLength(length,true);
         List<String> maxStrings = new LinkedList<>();
         int maxQuantity = -1;
         for (Map.Entry<String,Integer> pair:dictionary.entrySet()) {
@@ -71,7 +71,12 @@ public class NamesMaster {
     }
 
     public void AllIncludesString(String name){
-
+        String nextName;
+        while((nextName=nextName())!=null){
+            if(name.contains(nextName)){
+                System.out.println(nextName);
+            }
+        }
     }
 
     public void GenerateName(){
