@@ -7,20 +7,21 @@ import java.util.Map;
 public class Main {
     /**
      * A program that complete manipulations on a set of names and prints result the user depends on his request.
+     *
      * @param args, Should get 1 or 2 arguments, run the user request and finish program.
      */
     public static void main(String[] args) {
         //Initialize the names manipulation class.
         NamesMaster namesMaster = new NamesMaster();
         try {
+
             //Bad input because the program must receive 1 or 2 arguments.
             int argsNum = args.length;
-            if(argsNum == 0){
+            if (argsNum == 0) {
                 badInput();
-            }
-            else{
+            } else {
                 String functionName = args[0];
-                switch (argsNum){
+                switch (argsNum) {
                     case 1:
                         if (functionName.equals("GenerateName")) {
                             System.out.println(namesMaster.GenerateName());
@@ -67,6 +68,7 @@ public class Main {
                             default:
                                 badInput();
                         }
+                        break;
                     default:
                         badInput();
                 }

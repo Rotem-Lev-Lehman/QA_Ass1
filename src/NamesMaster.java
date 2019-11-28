@@ -1,5 +1,7 @@
 import java.io.*;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -275,13 +277,9 @@ public class NamesMaster {
      */
     private void startReading() {
         try {
-            ClassLoader classLoader = Main.class.getClassLoader();
-            String fileName = "names.txt";
-            URL resource = classLoader.getResource(fileName);
-            File file = new File(resource.getFile());
-            FileReader fileReader = new FileReader(file);
-            bufferedReader = new BufferedReader(fileReader);
-        } catch (FileNotFoundException e) {
+            InputStream in = getClass().getResourceAsStream("/names.txt");
+            bufferedReader = new BufferedReader(new InputStreamReader(in));
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
