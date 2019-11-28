@@ -19,6 +19,7 @@ public class NamesMaster {
 
     /**
      * The function gets a string and counts how many names contain that particular string.
+     *
      * @param string, the string the user want to count.
      * @return The amount of appearances .
      */
@@ -35,6 +36,7 @@ public class NamesMaster {
 
     /**
      * The function gets a number of length and returns all the sub-names with the given length.
+     *
      * @param length, The length that the user wants.
      * @return A dictionary with string ( at the given length ) as key and the number of appearances.
      */
@@ -46,7 +48,8 @@ public class NamesMaster {
 
     /**
      * The function gets a number of length and a boolean, and returns all the sub-names with the given length.
-     * @param length, The length that the user wants.
+     *
+     * @param length,  The length that the user wants.
      * @param toLower, Boolean that determines if throw the capital letters or to pay attention to them.
      * @return A dictionary with string ( at the given length ) as key and the number of appearances.
      */
@@ -55,10 +58,11 @@ public class NamesMaster {
         String nextName;
         while ((nextName = nextName()) != null) {
             //Throws capital letters if needed
+            int br = 0;
             if (toLower) {
                 nextName = nextName.toLowerCase();
             }
-            for (int i = 0; i + length < nextName.length(); i++) {
+            for (int i = 0; i + length < nextName.length() + 1; i++) {
                 String subByLength = nextName.substring(i, i + length);//check if add 1
                 addOneToQuantity(dictionary, subByLength);
             }
@@ -68,6 +72,7 @@ public class NamesMaster {
 
     /**
      * Function that return the string with certain length that appearance the most, return few if there is a tie.
+     *
      * @param length, The length that the user wants.
      * @return A list of string that appear the most by some length.
      */
@@ -81,13 +86,16 @@ public class NamesMaster {
 
     /**
      * A function that returns all the names that contain some string
+     *
      * @param string, the string the user want to search in names.
      * @return A list of all the names that contain the string.
      */
     public List<String> AllIncludesString(String string) {
+        string = string.toLowerCase();
         String nextName;
         List<String> allIncludesString = new LinkedList<>();
         while ((nextName = nextName()) != null) {
+            nextName = nextName.toLowerCase();
             if (string.contains(nextName)) {
                 allIncludesString.add(nextName);
             }
@@ -97,6 +105,7 @@ public class NamesMaster {
 
     /**
      * A function that generate a random name.
+     *
      * @return A name.
      */
     public String GenerateName() {
@@ -104,19 +113,20 @@ public class NamesMaster {
         Map<Character, Integer> firstLettersAppearances = new HashMap<>();
         Map<Character, Map<Character, Integer>> pairsCounting = new HashMap<>();
         Map<Integer, Integer> namesLength = new HashMap<>();
-        InitializeDictionaries(firstLettersAppearances, pairsCounting,namesLength);
+        InitializeDictionaries(firstLettersAppearances, pairsCounting, namesLength);
         //Generate the name:
-        String generatedName = GenerateName(firstLettersAppearances, pairsCounting,namesLength);
+        String generatedName = GenerateName(firstLettersAppearances, pairsCounting, namesLength);
         return generatedName;
     }
 
     /**
      * A function that generates a name by an existing data on characters appearances.
+     *
      * @param firstLettersAppearances, details about names first character.
-     * @param pairsCounting, details about what character follows what character by statistics.
+     * @param pairsCounting,           details about what character follows what character by statistics.
      * @return a name.
      */
-    private String GenerateName(Map<Character, Integer> firstLettersAppearances, Map<Character, Map<Character, Integer>> pairsCounting,Map<Integer, Integer> namesLength) {
+    private String GenerateName(Map<Character, Integer> firstLettersAppearances, Map<Character, Map<Character, Integer>> pairsCounting, Map<Integer, Integer> namesLength) {
         String name = "";
         //Get the first letter for a name.
         Character prevLetter = createFirstLetter(firstLettersAppearances);
@@ -132,6 +142,7 @@ public class NamesMaster {
 
     /**
      * A function that uses existing data to return random length.
+     *
      * @param namesLength, the lengths of existing names.
      * @return a length.
      */
@@ -139,18 +150,17 @@ public class NamesMaster {
         int totalNames = 0;
         int length = 6;
         //Count the number of all existing names.
-        for (Integer quantity:namesLength.keySet()){
+        for (Integer quantity : namesLength.values()) {
             totalNames += quantity;
         }
         //Choose random number.
-        int random = (int)(Math.random()*totalNames);
+        int random = (int) (Math.random() * totalNames);
         //Choose the length by distribution.
-        for(Map.Entry<Integer,Integer> pair:namesLength.entrySet()){
-            if(pair.getValue() > random){
+        for (Map.Entry<Integer, Integer> pair : namesLength.entrySet()) {
+            if (pair.getValue() >= random) {
                 length = pair.getKey();
                 return length;
-            }
-            else{
+            } else {
                 random -= pair.getValue();
             }
         }
@@ -159,14 +169,15 @@ public class NamesMaster {
 
     /**
      * A function that fills data to all needed dictionaries.
+     *
      * @param firstLettersAppearances, dictionary the holds data for how many time each letter is a first letter of a name.
-     * @param pairsCounting, dictionary the holds data for how many each character follow each character.
-     * @param namesLength, dictionary the holds data for how many names exists in different lengths.
+     * @param pairsCounting,           dictionary the holds data for how many each character follow each character.
+     * @param namesLength,             dictionary the holds data for how many names exists in different lengths.
      */
-    private void InitializeDictionaries(Map<Character, Integer> firstLettersAppearances, Map<Character, Map<Character, Integer>> pairsCounting,Map<Integer,Integer> namesLength) {
+    private void InitializeDictionaries(Map<Character, Integer> firstLettersAppearances, Map<Character, Map<Character, Integer>> pairsCounting, Map<Integer, Integer> namesLength) {
         String nextName;
         while ((nextName = nextName()) != null) {
-            addOneToQuantity(namesLength,nextName.length());
+            addOneToQuantity(namesLength, nextName.length());
             //Handle first characters dictionary:
             char first = nextName.charAt(0);
             addOneToQuantity(firstLettersAppearances, first);
@@ -189,6 +200,7 @@ public class NamesMaster {
 
     /**
      * A function that returns a letter to be the first letter for a name.
+     *
      * @param firstLettersAppearances, dictionary the holds data for how many time each letter is a first letter of a name.
      * @return a letter.
      */
@@ -198,8 +210,9 @@ public class NamesMaster {
 
     /**
      * A function that returns a letter to be the next letter for a name.
+     *
      * @param pairsCounting, dictionary the holds data for how many each character follow each character.
-     * @param prevLetter, The previous letter.
+     * @param prevLetter,    The previous letter.
      * @return a letter.
      */
     private Character createNextLetter(Map<Character, Map<Character, Integer>> pairsCounting, Character prevLetter) {
@@ -209,8 +222,9 @@ public class NamesMaster {
 
     /**
      * A function that returns the object that appear the most times, return random if there is a tie.
+     *
      * @param nextLetters, dictionary the holds data for a object and number of appearances.
-     * @param <T>, the object type.
+     * @param <T>,         the object type.
      * @return the object the appear the maximum.
      */
     private static <T> T getRandomArgMax(Map<T, Integer> nextLetters) {
@@ -221,8 +235,9 @@ public class NamesMaster {
 
     /**
      * A function that returns an object that has most appearances in certain dictionary.
+     *
      * @param dictionary, the dictionary to get the data from.
-     * @param <T>, the object type.
+     * @param <T>,        the object type.
      * @return List of object that appear the most.
      */
     private static <T> List<T> getArgMaxList(Map<T, Integer> dictionary) {
@@ -242,9 +257,10 @@ public class NamesMaster {
 
     /**
      * A function that adds 1 to value to a certain value in certain dictionary.
+     *
      * @param dictionary, the dictionary to manipulate.
-     * @param key, the key to add 1 too.
-     * @param <T>, the type of the object.
+     * @param key,        the key to add 1 too.
+     * @param <T>,        the type of the object.
      */
     private static <T> void addOneToQuantity(Map<T, Integer> dictionary, T key) {
         int quantity = 0;
@@ -283,28 +299,16 @@ public class NamesMaster {
 
     /**
      * A function that iterates over a stream from a file a returns the next line.
+     *
      * @return a name.
      */
     private String nextName() {
         String name = null;
         try {
             name = bufferedReader.readLine();
-            if (name != null) {
-                name = formatName(name);
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return name;
-    }
-
-    /**
-     * A function that fixes a format of a name, so that first letter capital and the rest are lower case.
-     * @param name, the name we want to format
-     * @return fixed format name.
-     */
-    private String formatName(String name) {
-        name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
         return name;
     }
 }

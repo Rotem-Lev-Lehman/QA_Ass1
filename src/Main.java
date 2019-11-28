@@ -7,6 +7,7 @@ import java.util.Map;
 public class Main {
     /**
      * A program that complete manipulations on a set of names and prints result the user depends on his request.
+     *
      * @param args, Should get 1 or 2 arguments, run the user request and finish program.
      */
     public static void main(String[] args) {
@@ -14,10 +15,9 @@ public class Main {
         NamesMaster namesMaster = new NamesMaster();
         try {
             //Bad input because the program must receive 1 or 2 arguments.
-            if(args.length == 0){
+            if (args.length == 0) {
                 badInput();
-            }
-            else{
+            } else {
                 String functionName = args[0];
                 if (args.length == 1) {
                     if (functionName.equals("GenerateName")) {
@@ -58,13 +58,14 @@ public class Main {
                     } else { // Bad input, there no other function that called with one argument.
                         badInput();
                     }
-                // Bad input because there cant be more than 2 arguments
+                    // Bad input because there cant be more than 2 arguments
                 } else {
                     badInput();
                 }
             }
-        //Print alert to user, if program crashed it because of bad input because the program is perfect (: .
+
         } catch (Exception e) {
+            //Print alert to user, if program crashed it because of bad input because the program is perfect (: .
             badInput();
         }
         //Informers the namesMaster that the program finished using it.
